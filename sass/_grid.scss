@@ -1,0 +1,41 @@
+$cols: 12;
+$gutter: 10px;
+$l-device: 1200px;
+$m-device: 760px;
+$s-device: 480px;
+
+@mixin device($size) {
+  @if $size == l {
+    @media screen and (max-width: #{$l-device}) {
+      @content;
+    }
+  } @else if $size == m {
+    @media screen and (min-width: #{$m-device}) and (max-width: $l-device - 1) {
+      @content;
+    }
+  } @else if $size == s {
+    @media screen and (max-width: $m-device - 1) {
+      @content;
+    }
+  }
+}
+
+.container {
+  width: $l-device;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: $gutter;
+  padding: 0 $gutter;
+
+  @include device(m) {
+    max-width: $m-device;
+  }
+
+  @include device(s) {
+    max-width: $s-device;
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+}
